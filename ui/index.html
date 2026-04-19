@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPL 2026 — Virat Kohli</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f4f4;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      color: #111;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      max-width: 600px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.5rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .header img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #eee;
+      flex-shrink: 0;
+    }
+
+    .header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .header .team {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 0.2rem;
+    }
+
+    /* Meta row */
+    .meta {
+      display: flex;
+      gap: 1.5rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid #eee;
+      font-size: 0.8rem;
+      color: #555;
+      flex-wrap: wrap;
+    }
+
+    .meta span { color: #aaa; margin-right: 0.3rem; }
+
+    /* Stats */
+    .section {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .section + .section {
+      border-top: 1px solid #eee;
+    }
+
+    .section h2 {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #aaa;
+      margin-bottom: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 0.5rem 0.25rem;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .stat .v {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .stat .l {
+      font-size: 0.6rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 0.15rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="header">
+    <img
+      src="../player_images/royal-challengers-bengaluru__virat-kohli.jpg"
+      alt="Virat Kohli"
+      onerror="this.style.opacity=0"
+    />
+    <div>
+      <h1>Virat Kohli</h1>
+      <div class="team">Royal Challengers Bengaluru</div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <div><span>Role</span>Batsman</div>
+    <div><span>Bats</span>Right Handed Bat</div>
+    <div><span>Bowls</span>Right-arm medium</div>
+  </div>
+
+  <div class="section">
+    <h2>Batting — IPL Career</h2>
+    <div class="grid">
+      <div class="stat"><div class="v">273</div><div class="l">Matches</div></div>
+      <div class="stat"><div class="v">265</div><div class="l">Innings</div></div>
+      <div class="stat"><div class="v">8908</div><div class="l">Runs</div></div>
+      <div class="stat"><div class="v">6676</div><div class="l">Balls</div></div>
+      <div class="stat"><div class="v">113</div><div class="l">Highest</div></div>
+      <div class="stat"><div class="v">39.77</div><div class="l">Average</div></div>
+      <div class="stat"><div class="v">133.44</div><div class="l">SR</div></div>
+      <div class="stat"><div class="v">41</div><div class="l">Not Out</div></div>
+      <div class="stat"><div class="v">799</div><div class="l">Fours</div></div>
+      <div class="stat"><div class="v">299</div><div class="l">Sixes</div></div>
+      <div class="stat"><div class="v">10</div><div class="l">Ducks</div></div>
+      <div class="stat"><div class="v">65</div><div class="l">50s</div></div>
+      <div class="stat"><div class="v">8</div><div class="l">100s</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">200s</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">300s</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">400s</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Bowling — IPL Career</h2>
+    <div class="grid">
+      <div class="stat"><div class="v">273</div><div class="l">Matches</div></div>
+      <div class="stat"><div class="v">26</div><div class="l">Innings</div></div>
+      <div class="stat"><div class="v">251</div><div class="l">Balls</div></div>
+      <div class="stat"><div class="v">368</div><div class="l">Runs</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">Maidens</div></div>
+      <div class="stat"><div class="v">4</div><div class="l">Wickets</div></div>
+      <div class="stat"><div class="v">92.0</div><div class="l">Average</div></div>
+      <div class="stat"><div class="v">8.8</div><div class="l">Economy</div></div>
+      <div class="stat"><div class="v">62.75</div><div class="l">SR</div></div>
+      <div class="stat"><div class="v">2/25</div><div class="l">BBI</div></div>
+      <div class="stat"><div class="v">2/25</div><div class="l">BBM</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">4W</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">5W</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">10W</div></div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
