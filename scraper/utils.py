@@ -75,5 +75,4 @@ def write_csv(rows: list, path: str) -> None:
         writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
         writer.writeheader()
         for row in rows:
-            # ensure all columns present, extras ignored
             writer.writerow({col: row.get(col, "") for col in CSV_COLUMNS})

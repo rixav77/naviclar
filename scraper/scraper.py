@@ -31,12 +31,7 @@ TEAMS = [
 ]
 
 
-# ---------------------------------------------------------------------------
-# Phase 2: Squad listing — get all player profile URLs
-# ---------------------------------------------------------------------------
-
 async def get_all_player_urls(page) -> list:
-    """Navigate squads page, click each team span, collect all player profile URLs."""
     print(f"\n[INFO] Loading squads page...")
     await page.goto(SQUADS_URL, wait_until="domcontentloaded", timeout=30000)
     await asyncio.sleep(3)
@@ -47,7 +42,6 @@ async def get_all_player_urls(page) -> list:
     for team in TEAMS:
         print(f"[INFO] Loading squad: {team}")
 
-        # Click the team's <span> element in the squad section
         clicked = await page.evaluate(f"""
             () => {{
                 const spans = document.querySelectorAll('span');
@@ -67,7 +61,6 @@ async def get_all_player_urls(page) -> list:
         await asyncio.sleep(random.uniform(1.5, 2.5))
 
         html = await page.content()
-        # Extract profile links: href="/profiles/{id}/{slug}" title="Player Name"
         players = re.findall(r'href="/profiles/(\d+)/([^"]+)"\s+title="([^"]+)"', html)
 
         new_count = 0
@@ -87,12 +80,7 @@ async def get_all_player_urls(page) -> list:
     return all_players
 
 
-# ---------------------------------------------------------------------------
-# Phase 3: Player profile parser
-# ---------------------------------------------------------------------------
-
 async def scrape_player(page, player_info: dict) -> dict:
-    """Scrape one player profile page and return a complete row dict."""
     url = player_info["url"]
     name = player_info["name"]
     team = player_info["team"]
@@ -130,7 +118,6 @@ async def scrape_player(page, player_info: dict) -> dict:
 
 
 def _parse_personal_info(soup: BeautifulSoup, row: dict) -> None:
-    """Extract Role, Batting Style, Bowling Style from the personal info section."""
     field_map = {
         "role": "role",
         "batting style": "Batting Style",
@@ -154,19 +141,16 @@ def _parse_personal_info(soup: BeautifulSoup, row: dict) -> None:
 
 
 def _parse_stats_tables(soup: BeautifulSoup, row: dict) -> None:
-    """Extract IPL column values from batting and bowling career summary tables."""
     for table in soup.find_all("table"):
         header_row = table.find("tr")
         if not header_row:
             continue
         headers = [th.get_text(strip=True) for th in header_row.find_all(["th", "td"])]
 
-        # Find the IPL column index dynamically — never hardcode
         ipl_idx = next((i for i, h in enumerate(headers) if h.strip().upper() == "IPL"), None)
         if ipl_idx is None:
             continue
 
-        # Identify batting vs bowling by the nearest preceding heading text
         label_map = None
         for prev in table.find_all_previous():
             text = prev.get_text(strip=True).lower()
@@ -191,21 +175,18 @@ def _parse_stats_tables(soup: BeautifulSoup, row: dict) -> None:
 
 
 def _extract_image_url(soup: BeautifulSoup) -> str | None:
-    """Find the player photo URL from the profile page."""
     for img in soup.find_all("img"):
         src = img.get("src", "")
         if "static.cricbuzz.com" in src and "/img/" in src:
-            # Strip query params for cleaner URL
             return src.split("?")[0]
     return None
 
 
 async def _download_image(page, image_url: str, filename: str) -> None:
-    """Download a player image via Playwright's request context."""
     IMAGES_DIR.mkdir(parents=True, exist_ok=True)
     dest = IMAGES_DIR / filename
     if dest.exists():
-        return  # Already downloaded
+        return
     try:
         response = await page.request.get(image_url)
         if response.ok:
@@ -216,10 +197,6 @@ async def _download_image(page, image_url: str, filename: str) -> None:
         print(f"[WARN] Image download error for {filename}: {e}")
     await asyncio.sleep(random.uniform(0.5, 1.0))
 
-
-# ---------------------------------------------------------------------------
-# Main orchestration
-# ---------------------------------------------------------------------------
 
 async def main():
     IMAGES_DIR.mkdir(parents=True, exist_ok=True)
@@ -238,7 +215,6 @@ async def main():
         page = await context.new_page()
         await Stealth().apply_stealth_async(page)
 
-        # Phase 2: get all player URLs
         players = await get_all_player_urls(page)
         total = len(players)
         print(f"\n[INFO] Total players found: {total}")
@@ -248,13 +224,11 @@ async def main():
             await browser.close()
             return
 
-        # Phase 3–6: scrape each player profile
         for i, player_info in enumerate(players, 1):
             print(f"[INFO] Processing player {i}/{total}: {player_info['name']} ({player_info['team']})")
             row = await scrape_player(page, player_info)
             results.append(row)
 
-            # Intermediate save every 25 players
             if i % 25 == 0:
                 write_csv(results, str(PARTIAL_CSV_PATH))
                 print(f"[INFO] Checkpoint: {i}/{total} players saved")
@@ -263,12 +237,10 @@ async def main():
 
         await browser.close()
 
-    # Write final CSV
     write_csv(results, str(CSV_PATH))
     print(f"\n[DONE] {len(results)} players → {CSV_PATH}")
     print(f"[DONE] Images → {IMAGES_DIR}")
 
-    # Cleanup partial file
     if PARTIAL_CSV_PATH.exists():
         PARTIAL_CSV_PATH.unlink()
 
